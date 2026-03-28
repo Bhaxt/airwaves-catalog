@@ -1,0 +1,6 @@
+catalog/.next/
+catalog/node_modules/
+catalog/public/images/
+scraper/__pycache__/
+scraper/*.pyc
+*.log
