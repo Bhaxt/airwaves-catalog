@@ -13,13 +13,27 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&family=Rubik:wght@500;700&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&family=Rubik:wght@500;700&display=swap"
+          media="print"
+          // @ts-ignore
+          onLoad="this.media='all'"
+        />
+      </head>
       <body>
         <CartProvider>
-          {/* Morphing background blobs */}
           <div className="bg-blob bg-blob-1" aria-hidden="true" />
           <div className="bg-blob bg-blob-2" aria-hidden="true" />
 
-          {/* Navbar — liquid glass */}
           <header className="glass-nav sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
               <Link href="/" className="flex items-center gap-2 group cursor-pointer">
@@ -35,17 +49,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </header>
 
-          {/* Cart Drawer */}
           <CartDrawer />
 
-          {/* Page content */}
           <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-6">
             {children}
           </main>
 
-          {/* Footer — glass */}
           <footer className="relative z-10 mt-16"
-            style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(202,138,4,0.15)' }}>
+            style={{ background: "rgba(255,255,255,0.04)", borderTop: "1px solid rgba(202,138,4,0.15)" }}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 text-center text-sm text-[#57534E]">
               © {new Date().getFullYear()} Airwaves · All rights reserved
             </div>
