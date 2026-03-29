@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import { Product } from "@/src/types";
+import { useCart } from "@/src/context/CartContext";
 
 interface Props {
   product: Product;
@@ -11,6 +13,16 @@ interface Props {
 export default function ProductCard({ product }: Props) {
   const thumb = product.images[0] || "/images/placeholder.png";
   const isExternal = thumb.startsWith("http");
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
+
+  function handleAdd(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  }
 
   return (
     <Link
@@ -25,6 +37,8 @@ export default function ProductCard({ product }: Props) {
           <img
             src={thumb}
             alt={product.name}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
@@ -38,6 +52,18 @@ export default function ProductCard({ product }: Props) {
         )}
         {/* Gold shimmer overlay on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(202,138,4,0.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        {/* Quick add button */}
+        <button
+          onClick={handleAdd}
+          className="absolute bottom-2 right-2 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all duration-200 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0"
+          style={added
+            ? { background: "rgba(202,138,4,0.2)", border: "1px solid rgba(202,138,4,0.5)", color: "#CA8A04" }
+            : { background: "rgba(202,138,4,0.85)", color: "#1a1714" }
+          }
+        >
+          {added ? "Added ✓" : "+ Cart"}
+        </button>
       </div>
 
       {/* Info */}

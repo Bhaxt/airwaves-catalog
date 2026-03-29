@@ -15,6 +15,8 @@ export interface Product {
   description: string;
   images: string[];
   variants: Variant[];
+  skuId?: string;
+  planId?: string;
   sourceUrl?: string;
 }
 

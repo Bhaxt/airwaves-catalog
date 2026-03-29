@@ -1,0 +1,60 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { Product } from "@/src/types";
+
+interface Props {
+  product: Product;
+}
+
+export default function ProductCard({ product }: Props) {
+  const thumb = product.images[0] || "/images/placeholder.png";
+  const isExternal = thumb.startsWith("http");
+
+  return (
+    <Link
+      href={`/product/${encodeURIComponent(product.id)}`}
+      className="glass-card group flex flex-col overflow-hidden cursor-pointer"
+    >
+      {/* Image */}
+      <div className="relative w-full aspect-square overflow-hidden rounded-t-[15px]"
+           style={{ background: 'rgba(255,255,255,0.04)' }}>
+        {isExternal ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={thumb}
+            alt={product.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <Image
+            src={thumb}
+            alt={product.name}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        )}
+        {/* Gold shimmer overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(202,138,4,0.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </div>
+
+      {/* Info */}
+      <div className="p-3 flex flex-col gap-1">
+        <p className="text-sm font-medium text-[#D6D3D1] line-clamp-2 leading-snug">
+          {product.name}
+        </p>
+        {product.price && (
+          <p className="text-base font-bold text-[#CA8A04]"
+             style={{ fontFamily: "'Rubik', sans-serif" }}>
+            ${parseFloat(product.price).toFixed(2)}
+          </p>
+        )}
+        <p className="text-[11px] text-[#57534E] uppercase tracking-wide font-medium">
+          {product.categoryName}
+        </p>
+      </div>
+    </Link>
+  );
+}

@@ -30,6 +30,10 @@ LIST_TO_CATEGORY = {
     "1756884780140": ("toys",         "Toys"),
     "1747729925493": ("watches",      "Watches"),
     "1742966278833": ("jersey",       "Jersey"),
+    "1731550262376": ("bags",         "Bags"),
+    "1741083147411": ("accessories",  "Apparel Accessories"),
+    "1736760319221": ("accessories",  "Apparel Accessories"),
+    "1745403414560": ("accessories",  "Apparel Accessories"),
 }
 
 OUTPUT_DIR   = Path(__file__).parent.parent / "catalog"
@@ -37,7 +41,7 @@ IMAGES_DIR   = OUTPUT_DIR / "public" / "images"
 DATA_DIR     = OUTPUT_DIR / "src" / "data"
 PRODUCTS_OUT = DATA_DIR / "products.json"
 
-DOWNLOAD_IMAGES = True
+DOWNLOAD_IMAGES = False
 REQUEST_DELAY   = 0.3   # seconds between API calls (be polite)
 
 HEADERS = {
@@ -122,6 +126,14 @@ def build_product(item: dict, cat_slug: str, cat_name: str) -> dict:
     std_url = item.get("standardUrl") or item.get("url") or ""
     source_url = BASE_URL + std_url if std_url else ""
 
+    # SKU variants — comma or slash separated string
+    skus_raw = item.get("skus") or ""
+    variants = [s.strip() for s in re.split(r"[/,]", skus_raw) if s.strip()]
+
+    # Freight calculation fields
+    sku_id = str(item.get("id") or "")
+    plan_id = str(item.get("planId") or "")
+
     return {
         "id":           product_id,
         "name":         name,
@@ -130,8 +142,10 @@ def build_product(item: dict, cat_slug: str, cat_name: str) -> dict:
         "category":     cat_slug,
         "categoryName": cat_name,
         "description":  description,
-        "images":       imgs_arr,   # raw URLs — will be replaced with local paths below
-        "variants":     [],
+        "images":       imgs_arr,
+        "variants":     variants,
+        "skuId":        sku_id,
+        "planId":       plan_id,
         "sourceUrl":    source_url,
     }
 

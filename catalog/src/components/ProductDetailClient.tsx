@@ -3,12 +3,21 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Product, Variant } from "@/src/types";
+import { useCart } from "@/src/context/CartContext";
 
 export default function ProductDetailClient({ product }: { product: Product }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(
     product.variants?.find(v => v.id) ?? null
   );
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
+
+  function handleAddToCart() {
+    addItem(product, selectedVariant?.name);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  }
 
   const images = product.images.length > 0 ? product.images : ["/images/placeholder.png"];
   const activeImage = images[activeIdx];
@@ -135,7 +144,19 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             </div>
           )}
 
-          <div className="pt-4 border-t border-white/5">
+          {/* Add to Cart */}
+          <button
+            onClick={handleAddToCart}
+            className="w-full py-3.5 rounded-xl font-bold text-base cursor-pointer transition-all duration-200"
+            style={added
+              ? { background: "rgba(202,138,4,0.15)", border: "1px solid rgba(202,138,4,0.4)", color: "#CA8A04" }
+              : { background: "#CA8A04", color: "#1a1714" }
+            }
+          >
+            {added ? "Added ✓" : "Add to Cart"}
+          </button>
+
+          <div className="pt-2 border-t border-white/5">
             <Link
               href={`/category/${product.category}`}
               className="text-sm text-[#CA8A04] hover:text-[#D97706] cursor-pointer transition-colors flex items-center gap-1"

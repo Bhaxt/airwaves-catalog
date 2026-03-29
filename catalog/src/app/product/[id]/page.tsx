@@ -5,9 +5,7 @@ import ProductDetailClient from "@/src/components/ProductDetailClient";
 
 const products = productsData as Product[];
 
-export function generateStaticParams() {
-  return products.map((p) => ({ id: p.id }));
-}
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ id: string }>;

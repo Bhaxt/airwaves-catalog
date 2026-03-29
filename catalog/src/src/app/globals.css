@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-cta:    #CA8A04;
+  --blur-amount:  18px;
+}
+
+/* ── Base ────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: #1a1714;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 80% -10%, rgba(202,138,4,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at -10% 80%, rgba(68,64,60,0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(28,25,23,0.8) 0%, transparent 100%);
+  color: #E7E5E4;
+  font-family: 'Nunito Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Rubik', sans-serif;
+}
+
+/* ── Liquid Glass card ───────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(var(--blur-amount)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  transition: transform 350ms cubic-bezier(.4,0,.2,1),
+              box-shadow 350ms cubic-bezier(.4,0,.2,1),
+              border-color 250ms ease,
+              background 250ms ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(202, 138, 4, 0.45);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(202,138,4,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+  transform: translateY(-4px);
+}
+
+/* ── Glass nav ───────────────────────────────────────────── */
+.glass-nav {
+  background: rgba(26, 23, 20, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(202, 138, 4, 0.15);
+}
+
+/* ── Gold border util ────────────────────────────────────── */
+.gold-border { border-color: rgba(202,138,4,0.5) !important; }
+
+/* ── Animated background orbs ───────────────────────────── */
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+  animation: morph 16s ease-in-out infinite alternate;
+}
+.bg-blob-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(202,138,4,0.35) 0%, transparent 70%);
+  top: -200px; right: -150px;
+  animation-delay: 0s;
+}
+.bg-blob-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(120,113,108,0.25) 0%, transparent 70%);
+  bottom: -150px; left: -100px;
+  animation-delay: -6s;
+}
+
+@keyframes morph {
+  0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: scale(1); }
+  50%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: scale(1.08); }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: scale(1); }
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #1a1714; }
+::-webkit-scrollbar-thumb { background: #44403C; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #CA8A04; }
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .bg-blob { animation: none; }
+  .glass-card { transition: none; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
