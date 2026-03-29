@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const INITIAL_SHOW = 10;
 
-export default function BrandJumpBar({ brands }: { brands: [string, number][] }) {
+export default function BrandJumpBar({ brands, categorySlug }: { brands: [string, number][]; categorySlug?: string }) {
   const [expanded, setExpanded] = useState(false);
 
   // Sort by product count descending
@@ -18,7 +18,7 @@ export default function BrandJumpBar({ brands }: { brands: [string, number][] })
         {visible.map(([brand, count]) => (
           <a
             key={brand}
-            href={`#brand-${brand.replace(/\s+/g, "-").toLowerCase()}`}
+            href={categorySlug ? `/category/${categorySlug}?brand=${encodeURIComponent(brand)}` : `#brand-${brand.replace(/\s+/g, "-").toLowerCase()}`}
             className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#D6D3D1] transition-all duration-200 cursor-pointer hover:text-[#CA8A04]"
             style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}
             onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(202,138,4,0.5)")}

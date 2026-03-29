@@ -12,7 +12,6 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
   const thumb = product.images[0] || "/images/placeholder.png";
-  const isExternal = thumb.startsWith("http");
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
 
@@ -31,27 +30,18 @@ export default function ProductCard({ product }: Props) {
     >
       {/* Image */}
       <div className="relative w-full aspect-square overflow-hidden rounded-t-[15px]"
-           style={{ background: 'rgba(255,255,255,0.04)' }}>
-        {isExternal ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={thumb}
-            alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        ) : (
-          <Image
-            src={thumb}
-            alt={product.name}
-            fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        )}
-        {/* Gold shimmer overlay on hover */}
+           style={{ background: "rgba(255,255,255,0.04)" }}>
+        <Image
+          src={thumb}
+          alt={product.name}
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+          quality={60}
+          loading="lazy"
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(202,138,4,0.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        {/* Quick add button */}
         <button
           onClick={handleAdd}
           className="absolute bottom-2 right-2 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all duration-200 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0"
