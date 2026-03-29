@@ -14,20 +14,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        {/* Preconnect to font servers */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Non-render-blocking font load */}
         <link
-          rel="preload"
-          as="style"
-          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&family=Rubik:wght@500;700&display=swap"
-        />
-        <link
+          href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Nunito+Sans:wght@400;500;700&display=swap"
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&family=Rubik:wght@500;700&display=swap"
           media="print"
           // @ts-ignore
-          onLoad="this.media='all'"
+          onload="this.media='all'"
         />
+        <noscript>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Nunito+Sans:wght@400;500;700&display=swap"
+            rel="stylesheet"
+          />
+        </noscript>
+        {/* Preconnect to image CDN */}
+        <link rel="preconnect" href="https://f005.backblazeb2.com" />
       </head>
       <body>
         <CartProvider>

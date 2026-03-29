@@ -10,7 +10,6 @@ export default function ProductGrid({ products, emptyMessage = "No products foun
   if (products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-gray-400">
-        <span className="text-5xl mb-4">🔍</span>
         <p className="text-lg">{emptyMessage}</p>
       </div>
     );
@@ -18,8 +17,8 @@ export default function ProductGrid({ products, emptyMessage = "No products foun
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+      {products.map((product, i) => (
+        <ProductCard key={product.id} product={product} priority={i < 4} />
       ))}
     </div>
   );
