@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "f005.backblazeb2.com" },
+      { protocol: "https", hostname: "img.airwavesluxury.com" },
       { protocol: "https", hostname: "www.okkrep.com" },
     ],
     formats: ["image/avif", "image/webp"],
