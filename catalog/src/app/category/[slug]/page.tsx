@@ -3,6 +3,7 @@ import { allProducts, productCounts } from "@/src/lib/products";
 import { CATEGORIES, Product } from "@/src/types";
 import CategorySidebar from "@/src/components/CategorySidebar";
 import ProductCard from "@/src/components/ProductCard";
+import BrandExpandable from "@/src/components/BrandExpandable";
 import BrandJumpBar from "@/src/components/BrandJumpBar";
 import Link from "next/link";
 
@@ -118,20 +119,13 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                     {brand}
                     <span className="text-sm font-normal text-[#A8A29E]">({brandProducts.length})</span>
                   </h2>
-                  {hasMore && (
-                    <Link
-                      href={`/category/${slug}?brand=${encodeURIComponent(brand)}`}
-                      className="text-xs font-semibold text-[#CA8A04] hover:text-[#D97706] transition-colors cursor-pointer whitespace-nowrap"
-                    >
-                      View all {brandProducts.length} →
-                    </Link>
-                  )}
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                  {preview.map((p, pi) => (
-                    <ProductCard key={p.id} product={p} priority={i === 0 && pi < 4} />
-                  ))}
-                </div>
+                <BrandExpandable
+                  brand={brand}
+                  categorySlug={slug}
+                  initialProducts={preview as Product[]}
+                  total={brandProducts.length}
+                />
               </section>
             );
           })}
