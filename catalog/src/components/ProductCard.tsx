@@ -12,7 +12,11 @@ interface Props {
 }
 
 export default function ProductCard({ product, priority = false }: Props) {
-  const thumb = product.images[0] || "/images/placeholder.png";
+  const rawThumb = product.images[0] || "";
+  // Replace okkrep.com image URLs with img.airwavesluxury.com (B2 via Cloudflare Worker)
+  const thumb = rawThumb.includes("okkrep.com")
+    ? "/images/placeholder.png"
+    : rawThumb || "/images/placeholder.png";
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
 
