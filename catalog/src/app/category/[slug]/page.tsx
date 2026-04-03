@@ -9,7 +9,11 @@ import BrandJumpBar from "@/src/components/BrandJumpBar";
 import CategoryBrandFilter from "@/src/components/CategoryBrandFilter";
 import Link from "next/link";
 
-export const revalidate = 86400; // cache for 24h, revalidates after redeploy
+export const revalidate = 86400; // revalidate every 24h
+
+export async function generateStaticParams() {
+  return CATEGORIES.map((c) => ({ slug: c.slug }));
+}
 
 const BRAND_PREVIEW = 10;
 
